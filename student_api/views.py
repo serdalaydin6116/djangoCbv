@@ -12,6 +12,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, mixins, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
+
 
 
 
@@ -107,6 +109,18 @@ class StudentLC(ListCreateAPIView):
 class StudentRUD(RetrieveUpdateDestroyAPIView):
     queryset=Student.objects.all()
     serializer_class=StudentSerializer
+
+
+### VIEW SET ###
+
+
+class StudentGRUD(ModelViewSet):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+
+
+
+
 
 
 
