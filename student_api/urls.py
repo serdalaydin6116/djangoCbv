@@ -5,6 +5,8 @@ from .views import (
     StudentDetail,
     StudentListCreate,
     StudentURD,
+    StudentLC,
+    StudentRUD,
 
 
 
@@ -29,8 +31,11 @@ urlpatterns = [
     # path('student/', StudentList.as_view()),                ##APIView
     # path('student/<int:pk>/', StudentDetail.as_view()),     ##APIView
    
-    path('student/', StudentListCreate.as_view()),            ##Generic APIView
-    path('student/<int:pk>/', StudentURD.as_view()),          ##Generic APIView
+    # path('student/', StudentListCreate.as_view()),            ##Generic APIView
+    path('student/', StudentLC.as_view()),                      ##Concrete APIView
+
+    # path('student/<int:pk>/', StudentURD.as_view()),          ##Generic APIView
+    path('student/<int:pk>/', StudentRUD.as_view()),           ##Concrete APIView
 
 
 
