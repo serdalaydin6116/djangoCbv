@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView, mixins, ListCreateAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView
+
 
 # Create your views here.
 
@@ -63,3 +65,50 @@ class StudentDetail(APIView):
         "message": f"student {student.last_name} deleted successfully"
         }
         return Response(data, status=status.HTTP_204_NO_CONTENT)
+
+
+### CBV GENERIC APIVIEW ###
+
+class StudentListCreate(mixins.ListModelMixin, mixins.CreateModelMixin, GenericAPIView):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+    def get(self, request, *args, **kwargs):
+        return self.list(request,*args, **kwargs )
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request,*args, **kwargs )
+
+
+class StudentURD(
+    mixins.UpdateModelMixin, 
+    mixins.RetrieveModelMixin, 
+    mixins.DestroyModelMixin,
+     GenericAPIView
+    ):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request,*args, **kwargs )
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request,*args, **kwargs )
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request,*args, **kwargs )
+
+
+### CBV CONCRETE APIVIEW ###
+
+class StudentLC(ListCreateAPIView):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+
+class StudentRUD(RetrieveUpdateDestroyAPIView):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
+
+
+
+
+    
+
