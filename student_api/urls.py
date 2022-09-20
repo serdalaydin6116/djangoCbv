@@ -3,6 +3,8 @@ from .views import (
     home,
     StudentList,
     StudentDetail,
+    StudentListCreate,
+    StudentURD,
 
 
 
@@ -24,8 +26,11 @@ from .views import (
 urlpatterns = [
     path('', home),
     ### CBV URLS ###
-    path('student/', StudentList.as_view()),
-    path('student/<int:pk>/', StudentDetail.as_view()),
+    # path('student/', StudentList.as_view()),                ##APIView
+    # path('student/<int:pk>/', StudentDetail.as_view()),     ##APIView
+   
+    path('student/', StudentListCreate.as_view()),            ##Generic APIView
+    path('student/<int:pk>/', StudentURD.as_view()),          ##Generic APIView
 
 
 
