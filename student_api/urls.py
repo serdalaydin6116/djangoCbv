@@ -1,4 +1,7 @@
-from django.urls import path
+from django.urls import path, include
+
+
+
 from .views import (
     home,
     StudentList,
@@ -7,6 +10,7 @@ from .views import (
     StudentURD,
     StudentLC,
     StudentRUD,
+    StudentGRUD,
 
 
 
@@ -24,18 +28,26 @@ from .views import (
 )
 
 
+from rest_framework.routers import DefaultRouter
+router=DefaultRouter()
+router.register('student', StudentGRUD, basename='student')
+
 
 urlpatterns = [
     path('', home),
+    path('', include(router.urls)),
     ### CBV URLS ###
     # path('student/', StudentList.as_view()),                ##APIView
     # path('student/<int:pk>/', StudentDetail.as_view()),     ##APIView
    
     # path('student/', StudentListCreate.as_view()),            ##Generic APIView
-    path('student/', StudentLC.as_view()),                      ##Concrete APIView
+    # path('student/', StudentLC.as_view()),                     ##Concrete APIView
 
     # path('student/<int:pk>/', StudentURD.as_view()),          ##Generic APIView
     path('student/<int:pk>/', StudentRUD.as_view()),           ##Concrete APIView
+
+
+    path('student/', StudentGRUD.as_view({'get': "list"})),             ## VIEW SET  
 
 
 
