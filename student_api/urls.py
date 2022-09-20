@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     home,
     StudentList,
+    StudentDetail,
 
 
 
@@ -23,7 +24,8 @@ from .views import (
 urlpatterns = [
     path('', home),
     ### CBV URLS ###
-    path('student/', StudentList.as_view(), name='List')
+    path('student/', StudentList.as_view()),
+    path('student/<int:pk>/', StudentDetail.as_view()),
 
 
 
