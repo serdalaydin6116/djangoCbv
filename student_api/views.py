@@ -30,9 +30,9 @@ class StudentList(APIView):
         serializer=StudentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            data = {
-            "message": f"Student {data.last_name} created successfully"
-            }
+            # data = {
+            # "message": f"Student {data.last_name} created successfully"
+            # }
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -40,3 +40,26 @@ class StudentList(APIView):
 class StudentDetail(APIView): 
     def get_obj(self, pk):
         return get_object_or_404(Student, pk=pk)
+
+    def get(self, request, pk):
+        student=self.get_obj(pk)
+        serializer=StudentSerializer(student)
+        return Response(serializer.data)    
+
+    def put(self, request, pk):
+        student=self.get_obj(pk)
+        serializer=StudentSerializer(student, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            new_data= serializer.data
+            new_data['success']= f"student {student.last_name} updated successfully"
+            return Response(new_data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST )
+
+    def delete(self, request, pk):
+        student=self.get_obj(pk)
+        student.delete()
+        data={
+        "message": f"student {student.last_name} deleted successfully"
+        }
+        return Response(data, status=status.HTTP_204_NO_CONTENT)
